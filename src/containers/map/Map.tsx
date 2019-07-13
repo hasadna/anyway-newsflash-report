@@ -16,9 +16,10 @@ L.Icon.Default.mergeOptions({
 
 interface Props {
   newsFlashesMarkers: any[];
+  leafletRef: React.Ref<any>;
 }
 
-const AnywayMap = (props: Props) => {
+const TempAnywayMap = (props: Props) => {
   const position = [32.0461, 34.8516] as [number, number];
 
   return (
@@ -28,6 +29,9 @@ const AnywayMap = (props: Props) => {
         center={position}
         zoom={12}
         maxZoom={30}
+        preferCanvas={true}
+        zoomControl={false}
+        ref={props.leafletRef}
       >
         <ReactLeafletGoogleLayer
           googleMapsLoaderConf={{
@@ -43,5 +47,9 @@ const AnywayMap = (props: Props) => {
     </div>
   );
 };
+
+const AnywayMap = React.forwardRef((props: any, ref) => (
+  <TempAnywayMap leafletRef={ref} {...props} />
+));
 
 export default AnywayMap;

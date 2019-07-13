@@ -2,19 +2,6 @@
   margin-right: 5px;
 }
 
-.lastNewsFlashContainer {
-  display: flex;
-}
-
-.lastNewsFlashContent {
-  margin-right: 10px;
-}
-
-.lastNewsFlashTitle {
-  text-decoration: underline;
-  font-weight: bold;
-}
-
 .allNewsFlashContainer {
   display: flex;
   margin-right: 5px;

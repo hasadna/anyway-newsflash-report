@@ -1,0 +1,21 @@
+.newsFlashContainer {
+  display: flex;
+  cursor: pointer;
+  flex-grow: 1;
+}
+
+.newsFlashContainer:hover {
+  background-color: #eeeeee;
+}
+
+.newsFlashContent {
+  margin-right: 10px;
+}
+
+.newsFlashTitle {
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+.newsFlashNoDescription {
+}

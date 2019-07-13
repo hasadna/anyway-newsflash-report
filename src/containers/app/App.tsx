@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from "react";
+/* eslint-disable react/jsx-no-target-blank */
+import React, { useState, useEffect, useRef } from "react";
 import Map from "../map";
 import clsx from "clsx";
+import styles from "./App.module.css";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -9,6 +11,8 @@ import IconButton from "@material-ui/core/IconButton";
 import { makeStyles } from "@material-ui/core/styles";
 import { getNewsFlash, getNewsFlashes } from "../../api/mocks";
 import NewsFlashDrawer from "../newsFlashDrawer";
+import { LatLng } from "leaflet";
+import * as ReactDOMServer from "react-dom/server";
 
 const drawerWidth = 350;
 
@@ -54,10 +58,11 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const App = () => {
+  const leafletRef = useRef(null);
   useEffect(() => {
     getNewsFlashesData();
   }, []);
-  const [newsFlashes, setNewsFlashes] = useState([]);
+  const [newsFlashes, setNewsFlashes] = useState<any[]>([]);
   const [lastNewsFlash, setLastNewsFlash] = useState<any>(null);
   const classes = useStyles();
   const [drawerOpen, setDrawerOpen] = React.useState(true);
@@ -71,10 +76,33 @@ const App = () => {
     setLastNewsFlash(lastFlash);
   }
 
+  function getMarkerPopup(item: any) {
+    return ReactDOMServer.renderToStaticMarkup(
+      <div className={styles.markerPopupContainer}>
+        {Object.keys(item).map((key, index) => {
+          return (
+            <div key={index} className={styles.makerPopupPropertyContainer}>
+              <div className={styles.markerKey}>{key}</div>
+              <div className={styles.markerValue}>
+                {key === "link" ? (
+                  <a href={item[key]} target="_blank">
+                    {item[key]}
+                  </a>
+                ) : (
+                  item[key]
+                )}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    );
+  }
+
   function createMarkerTooltip(id: number) {
     return async (e: L.LeafletMouseEvent) => {
       const newsFlashObj: any = await getNewsFlash(id);
-      e.target.bindPopup(newsFlashObj.description).openPopup();
+      e.target.bindPopup(getMarkerPopup(newsFlashObj)).openPopup();
     };
   }
 
@@ -94,6 +122,15 @@ const App = () => {
 
   function handleDrawerClose() {
     setDrawerOpen(false);
+  }
+
+  function newsFlashClicked(id: number) {
+    const item = newsFlashes.find(n => n.id === id);
+    //@ts-ignore
+    leafletRef.current.contextValue.map.setView(
+      new LatLng(item.lat, item.lon),
+      18
+    );
   }
 
   return (
@@ -119,7 +156,7 @@ const App = () => {
           </Toolbar>
         </AppBar>
         <main className={classes.content}>
-          <Map newsFlashesMarkers={newsFlashesMarkers} />
+          <Map newsFlashesMarkers={newsFlashesMarkers} ref={leafletRef} />
         </main>
         <NewsFlashDrawer
           classes={classes}
@@ -127,6 +164,7 @@ const App = () => {
           drawerOpen={drawerOpen}
           lastNewsFlash={lastNewsFlash}
           newsFlashes={newsFlashes}
+          newsFlashClicked={newsFlashClicked}
         />
       </div>
     </div>

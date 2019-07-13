@@ -4,6 +4,7 @@ import styles from "./NewsFlashDrawer.module.css";
 import IconButton from "@material-ui/core/IconButton";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import Divider from "@material-ui/core/Divider";
+import NewsFlash from "../../components/newsFlash";
 
 interface Props {
   handleDrawerClose: () => void;
@@ -11,12 +12,13 @@ interface Props {
   lastNewsFlash: any;
   classes: any;
   newsFlashes: any[];
+  newsFlashClicked: (id: number) => void;
 }
 
 const NewsFlashDrawer = (props: Props) => {
   const newsFlashes = props.newsFlashes;
   const classes = props.classes;
-
+  // Todo - implement the news flash list with react virtualized and cellmeasurer
   return (
     <Drawer
       className={classes.drawer}
@@ -36,33 +38,26 @@ const NewsFlashDrawer = (props: Props) => {
       <div className={styles.drawerContainer}>
         <h2>התאונה האחרונה:</h2>
         {props.lastNewsFlash && (
-          <div className={styles.lastNewsFlashContainer}>
-            <div className={styles.lastNewsFlashSource}>
-              {props.lastNewsFlash.source}
-            </div>
-            <div className={styles.lastNewsFlashContent}>
-              <div className={styles.lastNewsFlashTitle}>
-                {props.lastNewsFlash.title}
-              </div>
-              <div>{props.lastNewsFlash.description}</div>
-            </div>
-          </div>
+          <NewsFlash
+            item={props.lastNewsFlash}
+            newsFlashClicked={props.newsFlashClicked}
+            descritpion={true}
+          />
         )}
       </div>
       <Divider />
       {newsFlashes.length > 0 && (
         <div>
-          {newsFlashes.map((item, index) => {
+          {newsFlashes.slice(1, newsFlashes.length).map((item, index) => {
             return (
               <div key={index}>
                 <div className={styles.allNewsFlashContainer}>
-                  <div className={styles.lastNewsFlashSource}>
-                    {item.source}
-                  </div>
-                  <div className={styles.lastNewsFlashContent}>
-                    <div>{item.title}</div>
-                  </div>
+                  <NewsFlash
+                    item={item}
+                    newsFlashClicked={props.newsFlashClicked}
+                  />
                 </div>
+                <Divider />
               </div>
             );
           })}
