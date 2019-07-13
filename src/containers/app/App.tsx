@@ -54,6 +54,10 @@ const useStyles = makeStyles(theme => ({
     ...theme.mixins.toolbar,
     justifyContent: "flex-start"
   },
+  logo: {
+    height: "30px",
+    marginRight: "auto"
+  },
   content: {}
 }));
 
@@ -153,6 +157,7 @@ const App = () => {
             >
               <MenuIcon />
             </IconButton>
+            <img src="/anyway.png" alt="Anyway" className={classes.logo} />
           </Toolbar>
         </AppBar>
         <main className={classes.content}>
