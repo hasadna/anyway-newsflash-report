@@ -1,57 +1,56 @@
 import React, { useState, useEffect } from "react";
 import Map from "../map";
-import clsx from 'clsx';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import MenuIcon from '@material-ui/icons/Menu';
-import IconButton from '@material-ui/core/IconButton';
-import { makeStyles } from '@material-ui/core/styles';
+import clsx from "clsx";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import MenuIcon from "@material-ui/icons/Menu";
+import IconButton from "@material-ui/core/IconButton";
+import { makeStyles } from "@material-ui/core/styles";
 import { getNewsFlash, getNewsFlashes } from "../../api/mocks";
-import NewsFlashDrawer from '../newsFlashDrawer';
+import NewsFlashDrawer from "../newsFlashDrawer";
 
 const drawerWidth = 350;
 
 const useStyles = makeStyles(theme => ({
   root: {
-    direction: 'rtl'
+    direction: "rtl"
   },
   appBar: {
-    transition: theme.transitions.create(['margin', 'width'], {
+    transition: theme.transitions.create(["margin", "width"], {
       easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
+      duration: theme.transitions.duration.leavingScreen
+    })
   },
   appBarShift: {
     width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(['margin', 'width'], {
+    transition: theme.transitions.create(["margin", "width"], {
       easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
+      duration: theme.transitions.duration.enteringScreen
     }),
-    marginRight: drawerWidth,
+    marginRight: drawerWidth
   },
   title: {
-    flexGrow: 1,
+    flexGrow: 1
   },
   hide: {
-    display: 'none',
+    display: "none"
   },
   drawer: {
     width: drawerWidth,
-    flexShrink: 0,
+    flexShrink: 0
   },
   drawerPaper: {
-    width: drawerWidth,
+    width: drawerWidth
   },
   drawerHeader: {
-    display: 'flex',
-    alignItems: 'center',
-    padding: '0 8px',
+    display: "flex",
+    alignItems: "center",
+    padding: "0 8px",
     ...theme.mixins.toolbar,
-    justifyContent: 'flex-start',
+    justifyContent: "flex-start"
   },
-  content: {
-  }  
+  content: {}
 }));
 
 const App = () => {
@@ -61,7 +60,7 @@ const App = () => {
   const [newsFlashes, setNewsFlashes] = useState([]);
   const [lastNewsFlash, setLastNewsFlash] = useState<any>(null);
   const classes = useStyles();
-  const [drawerOpen, setDrawerOpen] = React.useState(true);  
+  const [drawerOpen, setDrawerOpen] = React.useState(true);
   async function getNewsFlashesData() {
     const newsFromApi: any[] = await getNewsFlashes();
     let lastFlash: any = null;
@@ -70,8 +69,8 @@ const App = () => {
     }
     setNewsFlashes(newsFromApi as any);
     setLastNewsFlash(lastFlash);
-  }  
-  
+  }
+
   function createMarkerTooltip(id: number) {
     return async (e: L.LeafletMouseEvent) => {
       const newsFlashObj: any = await getNewsFlash(id);
@@ -88,7 +87,7 @@ const App = () => {
       };
     }
   );
-  
+
   function handleDrawerOpen() {
     setDrawerOpen(true);
   }
@@ -96,40 +95,40 @@ const App = () => {
   function handleDrawerClose() {
     setDrawerOpen(false);
   }
-      
+
   return (
     <div className="App">
       <div className={classes.root}>
-      <CssBaseline />
-      <AppBar
-        position="fixed"
-        className={clsx(classes.appBar, {
-          [classes.appBarShift]: drawerOpen,
-        })}
-      >
-        <Toolbar>          
-          <IconButton
-            color="inherit"
-            aria-label="Open drawer"
-            edge="end"
-            onClick={handleDrawerOpen}
-            className={clsx(drawerOpen && classes.hide)}
-          >
-            <MenuIcon />
-          </IconButton>
-        </Toolbar>
-      </AppBar>
-      <main
-        className={classes.content}
-      >
-      <Map newsFlashesMarkers={newsFlashesMarkers} />              
-      </main>
-      <NewsFlashDrawer classes={classes} 
-                       handleDrawerClose={handleDrawerClose} 
-                       drawerOpen={drawerOpen}
-                       lastNewsFlash={lastNewsFlash}
-                       newsFlashes={newsFlashes} />
-    </div>
+        <CssBaseline />
+        <AppBar
+          position="fixed"
+          className={clsx(classes.appBar, {
+            [classes.appBarShift]: drawerOpen
+          })}
+        >
+          <Toolbar>
+            <IconButton
+              color="inherit"
+              aria-label="Open drawer"
+              edge="end"
+              onClick={handleDrawerOpen}
+              className={clsx(drawerOpen && classes.hide)}
+            >
+              <MenuIcon />
+            </IconButton>
+          </Toolbar>
+        </AppBar>
+        <main className={classes.content}>
+          <Map newsFlashesMarkers={newsFlashesMarkers} />
+        </main>
+        <NewsFlashDrawer
+          classes={classes}
+          handleDrawerClose={handleDrawerClose}
+          drawerOpen={drawerOpen}
+          lastNewsFlash={lastNewsFlash}
+          newsFlashes={newsFlashes}
+        />
+      </div>
     </div>
   );
 };

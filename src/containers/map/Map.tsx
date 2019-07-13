@@ -15,16 +15,20 @@ L.Icon.Default.mergeOptions({
 });
 
 interface Props {
-  newsFlashesMarkers: any[]
+  newsFlashesMarkers: any[];
 }
 
 const AnywayMap = (props: Props) => {
-  
-  const position = [32.0461, 34.8516] as [number, number];  
+  const position = [32.0461, 34.8516] as [number, number];
 
   return (
     <div className={styles.mapContainer}>
-      <Map style={{ height: "calc(100vh - 64px)", marginTop: "64px" }} center={position} zoom={12} maxZoom={30}>
+      <Map
+        style={{ height: "calc(100vh - 64px)", marginTop: "64px" }}
+        center={position}
+        zoom={12}
+        maxZoom={30}
+      >
         <ReactLeafletGoogleLayer
           googleMapsLoaderConf={{
             KEY: "AIzaSyBpOmft-UskZsAQth9vNl0fN6EXaRR6dZc",

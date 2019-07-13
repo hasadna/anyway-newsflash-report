@@ -4,5 +4,12 @@
       "javascriptreact",
       { "language": "typescript", "autoFix": true },
       { "language": "typescriptreact", "autoFix": true }
-    ]
+    ],
+    "editor.formatOnSave": true,
+    "[javascript]": {
+        "editor.formatOnSave": false
+    },
+    "[typescript]": {
+        "editor.formatOnSave": false
+    }
 }

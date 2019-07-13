@@ -1,18 +1,18 @@
 .drawerContainer {
-    margin-right: 5px;
+  margin-right: 5px;
 }
 
 .lastNewsFlashContainer {
-    display: flex;
+  display: flex;
 }
 
 .lastNewsFlashContent {
-    margin-right: 10px;
+  margin-right: 10px;
 }
 
 .lastNewsFlashTitle {
-    text-decoration: underline;
-    font-weight: bold;
+  text-decoration: underline;
+  font-weight: bold;
 }
 
 .allNewsFlashContainer {
