@@ -13,6 +13,7 @@ import { getNewsFlash, getNewsFlashes } from "../../api";
 import NewsFlashDrawer from "../newsFlashDrawer";
 import { LatLng } from "leaflet";
 import * as ReactDOMServer from "react-dom/server";
+import "typeface-roboto";
 
 const drawerWidth = 350;
 
