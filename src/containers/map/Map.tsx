@@ -35,7 +35,7 @@ const TempAnywayMap = (props: Props) => {
       >
         <ReactLeafletGoogleLayer
           googleMapsLoaderConf={{
-            KEY: "AIzaSyBpOmft-UskZsAQth9vNl0fN6EXaRR6dZc",
+            KEY: "AIzaSyDUIWsBLkvIUwzLHMHos9qFebyJ63hEG2M",
             VERSION: "3.37"
           }}
         />
