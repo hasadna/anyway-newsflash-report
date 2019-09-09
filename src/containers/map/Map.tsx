@@ -7,6 +7,9 @@ import LeafletMarkerCluster from '../leafletClusterMarker';
 import ReactLeafletGoogleLayer from 'react-leaflet-google-layer';
 import htmlToImage from 'html-to-image';
 import fileSaver from 'file-saver';
+import Button from 'reactstrap/lib/Button';
+import jsPDF from 'jspdf';
+
 /* This code is needed to properly load the images in the Leaflet CSS */
 // @ts-ignore
 delete L.Icon.Default.prototype._getIconUrl;
@@ -21,14 +24,16 @@ interface Props {
   leafletRef: React.Ref<any>;
 }
 
+interface State {
+  mapRef: React.RefObject<HTMLInputElement>;
+}
+
 const position = [32.0461, 34.8516] as [number, number];
 
-class TempAnywayMap extends React.Component<Props> {
-  private mapRef: React.RefObject<HTMLInputElement>;
-
+class TempAnywayMap extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
-    this.mapRef = React.createRef();
+    this.state = { mapRef: React.createRef() };
   }
 
   saveMapImage = (mapNode: any) => {
@@ -44,12 +49,12 @@ class TempAnywayMap extends React.Component<Props> {
   render() {
     return (
       <div
-        className={styles.mapContainer}
-        ref={this.mapRef}
-        onClick={this.saveMapImage.bind(this, this.mapRef.current)}
+        style={{ height: 'calc(100vh - 64px)', marginTop: '64px' }}
+        ref={this.state.mapRef}
       >
         <Map
-          style={{ height: 'calc(100vh - 64px)', marginTop: '64px' }}
+          className={styles.mapContainer}
+          style={{ height: 'calc(100vh - 128px)' }}
           center={position}
           zoom={12}
           maxZoom={30}
@@ -68,6 +73,15 @@ class TempAnywayMap extends React.Component<Props> {
             markers={this.props.newsFlashesMarkers}
           />
         </Map>
+        <div>
+          <Button
+            style={{ margin: 10 }}
+            color="primary"
+            onClick={this.saveMapImage.bind(this, this.state.mapRef.current)}
+          >
+            Download as PNG
+          </Button>{' '}
+        </div>
       </div>
     );
   }
