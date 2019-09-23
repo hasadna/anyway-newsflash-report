@@ -9,6 +9,7 @@ import htmlToImage from 'html-to-image';
 import fileSaver from 'file-saver';
 import Button from 'reactstrap/lib/Button';
 import jsPDF from 'jspdf';
+import { height } from '@material-ui/system';
 
 /* This code is needed to properly load the images in the Leaflet CSS */
 // @ts-ignore
@@ -54,7 +55,7 @@ class TempAnywayMap extends React.Component<Props, State> {
       >
         <Map
           className={styles.mapContainer}
-          style={{ height: 'calc(100vh - 128px)' }}
+          style={{ height: 'calc(100vh - 109px)' }}
           center={position}
           zoom={12}
           maxZoom={30}
@@ -73,10 +74,10 @@ class TempAnywayMap extends React.Component<Props, State> {
             markers={this.props.newsFlashesMarkers}
           />
         </Map>
-        <div>
+        <div style={{ backgroundColor: '#3F3F3F', height: '45px' }}>
           <Button
-            style={{ margin: 10 }}
-            color="primary"
+            style={{ margin: 3 }}
+            color="link"
             onClick={this.saveMapImage.bind(this, this.state.mapRef.current)}
           >
             Download as PNG
