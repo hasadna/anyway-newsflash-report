@@ -1,0 +1,49 @@
+[33mcommit 7812cc90ec54e92e08bb1a38b87b209da6266768[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: Yossi <YossiDev25@Gmail.com>
+Date:   Mon Sep 23 19:38:07 2019 +0300
+
+    style changed
+
+[1mdiff --git a/src/containers/map/Map.tsx b/src/containers/map/Map.tsx[m
+[1mindex 9890be5..6dd2e9d 100644[m
+[1m--- a/src/containers/map/Map.tsx[m
+[1m+++ b/src/containers/map/Map.tsx[m
+[36m@@ -9,6 +9,7 @@[m [mimport htmlToImage from 'html-to-image';[m
+ import fileSaver from 'file-saver';[m
+ import Button from 'reactstrap/lib/Button';[m
+ import jsPDF from 'jspdf';[m
+[32m+[m[32mimport { height } from '@material-ui/system';[m
+ [m
+ /* This code is needed to properly load the images in the Leaflet CSS */[m
+ // @ts-ignore[m
+[36m@@ -54,7 +55,7 @@[m [mclass TempAnywayMap extends React.Component<Props, State> {[m
+       >[m
+         <Map[m
+           className={styles.mapContainer}[m
+[31m-          style={{ height: 'calc(100vh - 128px)' }}[m
+[32m+[m[32m          style={{ height: 'calc(100vh - 109px)' }}[m
+           center={position}[m
+           zoom={12}[m
+           maxZoom={30}[m
+[36m@@ -73,10 +74,10 @@[m [mclass TempAnywayMap extends React.Component<Props, State> {[m
+             markers={this.props.newsFlashesMarkers}[m
+           />[m
+         </Map>[m
+[31m-        <div>[m
+[32m+[m[32m        <div style={{ backgroundColor: '#3F3F3F', height: '45px' }}>[m
+           <Button[m
+[31m-            style={{ margin: 10 }}[m
+[31m-            color="primary"[m
+[32m+[m[32m            style={{ margin: 3 }}[m
+[32m+[m[32m            color="link"[m
+             onClick={this.saveMapImage.bind(this, this.state.mapRef.current)}[m
+           >[m
+             Download as PNG[m
+[1mdiff --git a/src/containers/newsFlashDrawer/index.tsx b/src/containers/newsFlashDrawer/index.tsx[m
+[1mindex f8b2cda..a046959 100644[m
+[1m--- a/src/containers/newsFlashDrawer/index.tsx[m
+[1m+++ b/src/containers/newsFlashDrawer/index.tsx[m
+[36m@@ -1,2 +1,2 @@[m
+[31m-import NewsFlashDrawer from "./NewsFlashDrawer";[m
+[32m+[m[32mimport NewsFlashDrawer from './NewsFlashDrawer';[m
+ export default NewsFlashDrawer;[m

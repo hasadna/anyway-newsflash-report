@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './Map.module.css';
 import { Map } from 'react-leaflet';
 import L from 'leaflet';
@@ -31,13 +31,10 @@ interface State {
 
 const position = [32.0461, 34.8516] as [number, number];
 
-class TempAnywayMap extends React.Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.state = { mapRef: React.createRef() };
-  }
+const TempAnywayMap = (props: Props) => {
+  const [mapRef, setmapRef] = useState(React.createRef<HTMLDivElement>());
 
-  saveMapImage = (mapNode: any) => {
+  const saveMapImage = (mapNode: any) => {
     htmlToImage
       .toPng(mapNode)
       .then(dataURL => {
@@ -47,46 +44,44 @@ class TempAnywayMap extends React.Component<Props, State> {
       .catch(err => console.log(err));
   };
 
-  render() {
-    return (
-      <div
-        style={{ height: 'calc(100vh - 64px)', marginTop: '64px' }}
-        ref={this.state.mapRef}
+  return (
+    <div
+      style={{ height: 'calc(100vh - 64px)', marginTop: '64px' }}
+      ref={mapRef}
+    >
+      <Map
+        className={styles.mapContainer}
+        style={{ height: 'calc(100vh - 109px)' }}
+        center={position}
+        zoom={12}
+        maxZoom={30}
+        preferCanvas={true}
+        zoomControl={false}
+        ref={props.leafletRef}
       >
-        <Map
-          className={styles.mapContainer}
-          style={{ height: 'calc(100vh - 109px)' }}
-          center={position}
-          zoom={12}
-          maxZoom={30}
-          preferCanvas={true}
-          zoomControl={false}
-          ref={this.props.leafletRef}
+        <ReactLeafletGoogleLayer
+          googleMapsLoaderConf={{
+            KEY: 'AIzaSyDUIWsBLkvIUwzLHMHos9qFebyJ63hEG2M',
+            VERSION: '3.37'
+          }}
+        />
+        <LeafletMarkerCluster
+          options={{ maxClusterRadius: 20, showCoverageOnHover: false }}
+          markers={props.newsFlashesMarkers}
+        />
+      </Map>
+      <div style={{ backgroundColor: '#3F3F3F', height: '45px' }}>
+        <Button
+          style={{ margin: 3 }}
+          color="link"
+          onClick={saveMapImage.bind(null, mapRef.current)}
         >
-          <ReactLeafletGoogleLayer
-            googleMapsLoaderConf={{
-              KEY: 'AIzaSyDUIWsBLkvIUwzLHMHos9qFebyJ63hEG2M',
-              VERSION: '3.37'
-            }}
-          />
-          <LeafletMarkerCluster
-            options={{ maxClusterRadius: 20, showCoverageOnHover: false }}
-            markers={this.props.newsFlashesMarkers}
-          />
-        </Map>
-        <div style={{ backgroundColor: '#3F3F3F', height: '45px' }}>
-          <Button
-            style={{ margin: 3 }}
-            color="link"
-            onClick={this.saveMapImage.bind(this, this.state.mapRef.current)}
-          >
-            Download as PNG
-          </Button>{' '}
-        </div>
+          Download as PNG
+        </Button>{' '}
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 const AnywayMap = React.forwardRef((props: any, ref) => (
   <TempAnywayMap leafletRef={ref} {...props} />
