@@ -1,2 +1,2 @@
-import NewsFlashDrawer from "./NewsFlashDrawer";
+import NewsFlashDrawer from './NewsFlashDrawer';
 export default NewsFlashDrawer;
